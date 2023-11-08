@@ -5,11 +5,12 @@
     <title>work</title>
     <style>
       #outside{
-        width: 60%;
+        width: 80%;
         height: 650px;
         margin: 0 auto;
         border: black solid 2px;
         background-color: #ded2d3;
+        border-radius: 10px;
       }
       #TAB{
         width: 40%;
@@ -19,24 +20,28 @@
         margin-left: 2px;
         align-items: center;
         background-color: #e3e3d9;
+        float: left;
+        border-radius: 8px;
       }
       #frient_Head{
         width: 50%;
-        height: 25px;
+        height: 40px;
         float: left;
         text-align: center;
-        font-size: 20px;
+        font-size: 30px;
         font-weight: bold;
         user-select: none;
+        font-family: 华文彩云;
       }
       #score_Head{
         width: 50%;
-        height: 25px;
+        height: 40px;
         float: left;
         text-align: center;
-        font-size: 20px;
+        font-size: 30px;
         font-weight: bold;
         user-select: none;
+        font-family: 华文彩云;
       }
       #score_Head:hover{
         background-color: #a0b7c9;
@@ -44,15 +49,68 @@
       #frient_Head:hover{
         background-color: #a0b7c9;
       }
-      .item_list{
-        width: 100%;
-        height: 25px;
-      }
       #i_list{
         width: 100%;
-        height: 570px;
+        height: 550px;
         border-top: #1c1a1a solid 2px;
         margin-top: 25px;
+        user-select: none;
+        overflow-y: auto;
+        background-color: #e3e3d9;
+      }
+      .item_list{
+        width: 100%;
+        height: 40px;
+        border-bottom: #a0b7c9 solid 1px;
+        font-size: 25px;
+        text-align: center;
+      }
+      .item_list:hover{
+        background-color: #ded2d3;
+      }
+      .name_id{
+        width: 30%;
+        height: 100%;
+        font-weight: bold;
+        float: left;
+      }
+      .tag{
+        color: green;
+        width: 20%;
+        height: 100%;
+        float: right;
+      }
+      .chat{
+        width: 10%;
+        height: 70%;
+        float: right;
+        text-align: center;
+        font-size: 15px;
+      }
+      #set_Head{
+        width: 50%;
+        height: 210px;
+        float: left;
+        margin-top: 200px;
+        margin-right: 2px;
+        align-items: center;
+      }
+      .bt{
+        width: 200px;
+        height: 40px;
+        text-align: center;
+        margin: 0 auto;
+        margin-top: 25px;
+        border: #1c1a1a solid 2px;
+        font-weight: bolder;
+        font-family: "Cambria Math";
+        font-size: 32px;
+        background-color: #a91e3d;
+        user-select: none;
+        border-radius: 10px;
+      }
+      .bt:hover{
+        background-color: #a0b7c9;
       }
 
     </style>
@@ -60,25 +118,79 @@
   <body>
   <div id="outside">
     <div id="TAB">
-      <div onclick="gotoF()" id="frient_Head">好友列表</div>
-      <div onclick="gotoS()" id="score_Head">排名列表</div>
+      <div id="frient_Head">好友列表</div>
+      <div id="score_Head">排名列表</div>
       <div id="i_list"></div>
+
+    </div>
+    <div id="set_Head">
+      <div class="bt"><a href="window3.html" style="text-decoration: none; color: black">开始游戏</a></div>
+      <div class="bt">设置</div>
+      <div class="bt">退出游戏</div>
     </div>
   </div>
 
   <script>
-    var TAB = document.getElementById('TAB');
+    var TAB = document.getElementById('i_list');
+    gotoF();
 
     function gotoF(){
-      for(let i = 0; i < 10; i++){
+      TAB.innerHTML = '';
+      for(let i = 0; i < 50; i++){
         var t = document.createElement('div');
         t.className = 'item_list';
+        var name = document.createElement('div');
+        name.className = 'name_id';
+        name.innerText = 'wbsnbh';
+        t.appendChild(name);
+        var tag = document.createElement('span');
+        tag.innerText = '在线';
+        tag.className = 'tag';
+        t.appendChild(tag);
+        bu = document.createElement('button');
+        bu.className = 'chat';
+        bu.innerText = '私聊';
+        t.appendChild(bu);
 
+        TAB.appendChild(t);
       }
+      document.getElementById('frient_Head').style.backgroundColor = '#a0b7c9';
+      document.getElementById('score_Head').style.backgroundColor = '#e3e3d9';
     }
+    var cl1 = false, cl2 = false;
+    document.getElementById('frient_Head').addEventListener('click', function (){
+      if(!cl1){
+        gotoF();
+        cl1 = true;
+        cl2 = false;
+      }
+    });
     function gotoS(){
+      TAB.innerHTML = '';
+      for(let i = 0; i < 50; i++){
+        var t = document.createElement('div');
+        t.className = 'item_list';
+        var name = document.createElement('div');
+        name.className = 'name_id';
+        name.innerText = 'wbsnbh';
+        t.appendChild(name);
+        var tag = document.createElement('span');
+        tag.innerText = i+1;
+        tag.className = 'tag';
+        t.appendChild(tag);
 
+        TAB.appendChild(t);
+      }
+      document.getElementById('score_Head').style.backgroundColor = '#a0b7c9';
+      document.getElementById('frient_Head').style.backgroundColor = '#e3e3d9';
     }
+    document.getElementById('score_Head').addEventListener('click', function (){
+      if(!cl2){
+        gotoS();
+        cl2 = true;
+        cl1 = false;
+      }
+    });
   </script>
   </body>
 </html>
