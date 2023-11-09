@@ -27,7 +27,7 @@ public class Login : MonoBehaviour
         // 使名为"remind"的rawImage组件不可见
         remind.gameObject.SetActive(false);
         registerPage.gameObject.SetActive(false);
-        sqlSer = "server = mysql.sqlpub.com;port = 3306;user = urrruruu;database = urrruruu;password = 90d7a69b35eb68d7;charset=utf8mb4";
+        sqlSer = "";
         conn = new MySqlConnection(sqlSer);
     }
 
