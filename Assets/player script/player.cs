@@ -12,6 +12,8 @@ public class player : MonoBehaviour
     public float rotation;
     public float N = 0;
     public float aboveRotation = 0;
+    public float stopThere = 0;
+    public float startThere = 0;
     [Header("其他相关")]
     public Rigidbody2D playerRB;
     public Transform playerTransform;
@@ -23,14 +25,14 @@ public class player : MonoBehaviour
         playerRB = GetComponent<Rigidbody2D>();
         playerTransform = GetComponent<Transform>();
         playerSpeed = 1;
-        rotateSpeed = 1;
+        rotateSpeed = 1.5f;
         
     }
 
     
     void Update()
     {
-        playerMove();
+        adjustStay();
     }
 
     void playerMove()
@@ -63,12 +65,38 @@ public class player : MonoBehaviour
             N = 0;
             aboveRotation = rotation;
         }
-
+        
     }
     private void FixedUpdate()
     {
         // 设置船的旋转角度
         playerTransform.rotation = Quaternion.Euler(0, 0, rotation);
+        
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        playerRB.velocity = new Vector2(0, 0);
+        stopThere = 1;
+    }
+
+    void adjustStay()
+    {
+        if(stopThere == 0)
+        {
+            playerMove();
+        }
+        else
+        {
+            startThere += Time.deltaTime;
+            playerRB.velocity = new Vector2(playerRB.velocity.x, startThere * playerSpeed);
+            if(startThere > 1)
+            {
+                stopThere = 0;
+                startThere = 0;
+            }
+        }
+        
         
     }
 }

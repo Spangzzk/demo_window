@@ -15,10 +15,10 @@ public class CameraSystem : MonoBehaviour
         moveTime = 1.5f;
         if(playerTarget != null)
         {
-            if(playerTarget.position != transform.position)
+            if(playerTarget.position != mapCamera.position)
             {
-                Vector3 tempPosition = new Vector3(transform.position.x, playerTarget.position.y + 6f, transform.position.z);
-                transform.position = Vector3.Lerp(transform.position, tempPosition, moveTime * Time.deltaTime);
+                Vector3 tempPosition = new Vector3(mapCamera.position.x, playerTarget.position.y + 2f, mapCamera.position.z);
+                mapCamera.position = Vector3.Lerp(mapCamera.position, tempPosition, moveTime * Time.deltaTime);
             }
         }        
     }
