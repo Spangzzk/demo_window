@@ -37,7 +37,7 @@ public class Login : MonoBehaviour
         registerPage.gameObject.SetActive(false); // 注册界面隐藏
 
         // mysql连接
-        sqlSer = "server = mysql.sqlpub.com;port = 3306;user = urrruruu;database = urrruruu;password = 90d7a69b35eb68d7;charset=utf8mb4";
+        sqlSer = "";
         conn = new MySqlConnection(sqlSer);
     }
 
