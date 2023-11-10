@@ -7,27 +7,37 @@ using UnityEngine.UI;
 using MySql.Data.MySqlClient;
 using System.Data;
 using UnityEngine.Analytics;
+using System;
+using UnityEditor.MemoryProfiler;
 
 public class Login : MonoBehaviour
 {
-    // Login UI
+    // 登录账号与密码
     public TMP_InputField username;
     public TMP_InputField password;
+    // 注册账号与密码
     public TMP_InputField usernameReg;
     public TMP_InputField passwordReg;
-    public RawImage remind;
-    public RawImage registerPage;
-    public TMP_Text tip;
+    // 所需跳转页面
+    public RawImage remind; // 提醒界面
+    public RawImage registerPage; // 注册界面
+    public TMP_Text tip;// 提醒界面展示文字
+    // mysql
     private string sqlSer;
     private MySqlConnection conn;
+    // 控制返回层数
     private int i = 2;
+    // 音乐控制
+    public AudioSource audioSource;
+    private bool isPlaying = false;
 
     void Start()
     {
-        // 使名为"remind"的rawImage组件不可见
-        remind.gameObject.SetActive(false);
-        registerPage.gameObject.SetActive(false);
-        sqlSer = "";
+        remind.gameObject.SetActive(false); // 提醒界面隐藏
+        registerPage.gameObject.SetActive(false); // 注册界面隐藏
+
+        // mysql连接
+        sqlSer = "server = mysql.sqlpub.com;port = 3306;user = urrruruu;database = urrruruu;password = 90d7a69b35eb68d7;charset=utf8mb4";
         conn = new MySqlConnection(sqlSer);
     }
 
@@ -37,6 +47,8 @@ public class Login : MonoBehaviour
         print(username.text);
         print(password.text);
     }
+
+    // 登录功能实现
     public void LoginButton()
     {
         //// 判断用户名和密码是否正确
@@ -61,6 +73,18 @@ public class Login : MonoBehaviour
         { 
             conn.Open();
             Debug.Log("connect successful");
+
+            // 执行刷新数据库的SQL语句
+            string flushQuery = "FLUSH TABLES;";
+
+            using (MySqlCommand command = new MySqlCommand(flushQuery, conn))
+            {
+                // 执行刷新操作
+                int rowsAffected = command.ExecuteNonQuery();
+
+                Console.WriteLine($"Database refreshed. Rows affected: {rowsAffected}");
+            }
+
             //sql语句
             string sqlQuary = "SELECT * FROM player;";
 
@@ -103,6 +127,7 @@ public class Login : MonoBehaviour
         }
     }
 
+    // 返回界面
     public void BackButton()
     {
         // 使名为"remind"的rawImage组件不可见
@@ -116,13 +141,14 @@ public class Login : MonoBehaviour
         }
         i = 2;
     }
-
+    // 跳转注册界面
     public void RegisterButton()
     {
         // 使注册界面出现
         registerPage.gameObject.SetActive(true);
     }
 
+    // 注册功能实现
     public void RegisterPage_registerButton()
     {
         // 注册功能实现
@@ -130,6 +156,18 @@ public class Login : MonoBehaviour
         {
             conn.Open();
             Debug.Log("connect successful");
+
+            // 执行刷新数据库的SQL语句
+            string flushQuery = "FLUSH TABLES;";
+
+            using (MySqlCommand command = new MySqlCommand(flushQuery, conn))
+            {
+                // 执行刷新操作
+                int rowsAffected = command.ExecuteNonQuery();
+
+                Console.WriteLine($"Database refreshed. Rows affected: {rowsAffected}");
+            }
+
             //sql语句
             string sqlQuary = "select * from player";
 
@@ -197,5 +235,22 @@ public class Login : MonoBehaviour
             conn.Close();
         }
         remind.gameObject.SetActive(true);
+    }
+
+    // 音乐播放控制
+    public void MusicControl()
+    {
+        // 切换播放状态
+        if (isPlaying)
+        {
+            audioSource.Pause();
+        }
+        else
+        {
+            audioSource.Play();
+        }
+
+        // 更新播放状态
+        isPlaying = !isPlaying;
     }
 }
