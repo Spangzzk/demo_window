@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Pool;
 
-public class Obstacle : MonoBehaviour
+public class Blood : MonoBehaviour
 {
     private Renderer rend;
 
